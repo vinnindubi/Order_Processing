@@ -2,14 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
-{
-    protected $fillable=[];
-    public function orders(){
-        $this->belongsToMany(Order::class,'order_items');
+{ use HasFactory;
+    protected $fillable=['name','stock','price','description'];
+    public function order_items(){
+        return $this->hasMany(Order::class);
     }
-
-
 }

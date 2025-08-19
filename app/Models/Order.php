@@ -6,8 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $fillable=[];
+    protected $fillable=['quantity','amount','customer_id','payment_id','payment_status'];
     public function products(){
-        $this->belongsToMany(Product::class,'order_items');
+        return $this->belongsToMany(Product::class);
+    }
+    public function orderItems(){
+        return $this->hasMany(OrderItem::class);
     }
 }

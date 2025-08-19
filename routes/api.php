@@ -2,7 +2,9 @@
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/user', function (Request $request) {
@@ -16,3 +18,7 @@ Route::apiResource('/customers',HomeController::class);
 Route::resource('/login',HomeController::class);
 Route::get('/stkPush',[PaymentController::class,'stkPush']);
 Route::post('/mpesaCallback',[PaymentController::class,'mpesaCallback']);
+Route::apiResource('/products',ProductController::class);
+// Route::route('/products/orders',OrderController::class);
+Route::get('/orders/list',[OrderController::class ,'home']);
+Route::resource('/orders',OrderController::class);
