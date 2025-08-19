@@ -17,7 +17,7 @@ class OrderController extends Controller
         $data=Order::find($id);
         return response()->json([
             "message"=>"order returned ",
-            "data"=>$data
+            "data"=>$data->orderItems
         ]);
     }
     public function store(Request $request){
@@ -34,6 +34,8 @@ class OrderController extends Controller
             'amount'=>$validated['amount'],
             
         ]);
+        /*her we are creating multiple record in the orderItem table .
+        so we are collecting an array of products then we loop as we create them*/
         foreach( $validated['items'] as $item )
         {
             $value=OrderItem::create([
@@ -45,11 +47,36 @@ class OrderController extends Controller
         }
         return response()->json([
             "message"=>"order created successfully",
-            "data"=>$data->id,
-            "orderItem"=>$value
+            "data"=>$value
         ]);
     }
     public function update(Request $request, $id){
+        $validated=$request->validate([
+            "quantity"=>"required|integer",
+            "amount"=>"required|integer",
+            "items"=>"required|array",
+            "items.*.product_id"=>"required|exists:products,id",
+            "items.*.no_goods"=>"required|min:1",
+            "items.*.total_amount"=>"required|min:1"
+        ]);
+        $data=Order::find($id);
+        $data->update([
+            "quantity"=>$validated['quantity'],
+            'amount'=>$validated['amount'],
+        ]);
+        $value=OrderItem::where('order_id',$id);
+        foreach($validated['items'] as $item){
+            $value->update([
+                "order_id"=>$data->id,
+                "product_id"=>$item['product_id'],
+                "no_goods"=>$item['no_goods'],
+                "total_amount"=>$item['total_amount']
+            ]);
+        }
+        return response()->json([
+            "message"=>"order Updated Successfully"
+        ]);
+
 
     }
     public function destroy($id){

@@ -21,4 +21,6 @@ Route::post('/mpesaCallback',[PaymentController::class,'mpesaCallback']);
 Route::apiResource('/products',ProductController::class);
 // Route::route('/products/orders',OrderController::class);
 Route::get('/orders/list',[OrderController::class ,'home']);
+Route::get('/orders/list/{id}',[OrderController::class ,'show']);
+Route::put('/orders/list/{id}',[OrderController::class ,'update']);
 Route::resource('/orders',OrderController::class);
