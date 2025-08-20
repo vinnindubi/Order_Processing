@@ -68,31 +68,29 @@ class OrderController extends Controller
             "items.*.product_id"=>"required|exists:products,id",
             "items.*.no_goods"=>"required|integer|min:1",
         ]);
-        $data=Order::find($id);
-        $item=$validated['items'];
-        $product=Product::find($item['product_id']);
+        $data=Order::findOrFail($id);
+        foreach($validated['items'] as $item){
+            $product = Product::findOrFail($item['product_id']);
+            $totalAmount = $product->price * $item['no_goods'];
         
-        dd($product);
-        // foreach($validated['items'] as $item){
-        //     $product=Product::findOrFail($item['product_id']);
-        //     $totalAmount=$product->price * $item['no_goods'];
-        //     $data->orderItems()->update([
-        //         "order_id"=>$data->id,
-        //         "product_id"=>$item['product_id'],
-        //         "no_goods"=>$item['no_goods'],
-        //         "total_amount"=>$totalAmount
-        //     ]);
-        //     $overAllQuantity+= $item['no_goods'];
-        //     $overAllAmount+=$totalAmount;
-        // }
-        // $result=$data->update([
-        //     "quantity"=>$overAllQuantity,
-        //     'amount'=>$overAllAmount,
-        // ]);
-        // return response()->json([
-        //     "message"=>"order Updated Successfully",
-        //     "data"=>$result
-        // ]);
+            $data->orderItems()->updateOrCreate(
+                [ 
+                    "product_id" => $item['product_id'] // match condition
+                ],
+                [
+                    "order_id" => $data->id,
+                    "no_goods" => $item['no_goods'],
+                    "total_amount" => $totalAmount
+                ]
+            );
+        
+            $overAllQuantity += $item['no_goods'];
+            $overAllAmount  += $totalAmount;
+        }
+        
+        return response()->json([
+            "message"=>"order Updated Successfully"
+        ]);
 
 
     }
