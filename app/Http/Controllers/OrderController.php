@@ -69,28 +69,30 @@ class OrderController extends Controller
             "items.*.no_goods"=>"required|integer|min:1",
         ]);
         $data=Order::find($id);
+        $item=$validated['items'];
+        $product=Product::find($item['product_id']);
         
-        $value=OrderItem::where('order_id',$id);
-        foreach($validated['items'] as $item){
-            $product=Product::findOrFail($item['product_id']);
-            $totalAmount=$product->price * $item['no_goods'];
-            $value->update([
-                "order_id"=>$data->id,
-                "product_id"=>$item['product_id'],
-                "no_goods"=>$item['no_goods'],
-                "total_amount"=>$totalAmount
-            ]);
-            $overAllQuantity+= $item['no_goods'];
-            $overAllAmount+=$totalAmount;
-        }
-        $result=$data->update([
-            "quantity"=>$overAllQuantity,
-            'amount'=>$overAllAmount,
-        ]);
-        return response()->json([
-            "message"=>"order Updated Successfully",
-            "data"=>$result
-        ]);
+        dd($product);
+        // foreach($validated['items'] as $item){
+        //     $product=Product::findOrFail($item['product_id']);
+        //     $totalAmount=$product->price * $item['no_goods'];
+        //     $data->orderItems()->update([
+        //         "order_id"=>$data->id,
+        //         "product_id"=>$item['product_id'],
+        //         "no_goods"=>$item['no_goods'],
+        //         "total_amount"=>$totalAmount
+        //     ]);
+        //     $overAllQuantity+= $item['no_goods'];
+        //     $overAllAmount+=$totalAmount;
+        // }
+        // $result=$data->update([
+        //     "quantity"=>$overAllQuantity,
+        //     'amount'=>$overAllAmount,
+        // ]);
+        // return response()->json([
+        //     "message"=>"order Updated Successfully",
+        //     "data"=>$result
+        // ]);
 
 
     }
