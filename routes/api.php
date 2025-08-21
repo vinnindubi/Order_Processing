@@ -31,3 +31,5 @@ Route::get('/orders/list',[OrderController::class ,'home']);
 Route::get('/orders/list/{id}',[OrderController::class ,'show']);
 Route::put('/orders/list/{id}',[OrderController::class ,'update']);
 Route::post('/orders',[OrderController::class,'store']);
+Route::delete('/orders/{id}',[OrderController::class,'destroy']);
+Route::delete('/ordersItems/{id}',[OrderController::class ,'deleteProduct']);

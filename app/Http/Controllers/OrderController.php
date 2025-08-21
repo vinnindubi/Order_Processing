@@ -112,6 +112,21 @@ class OrderController extends Controller
 
 
     }
+    public function deleteProduct( Request $request,$id){
+        $data=Order::find($id);
+        $result=$data->orderItems()->where('product_id',$request->id)->delete();
+        
+     // Recompute totals after deletion
+     $totalQuantity = $data->orderItems()->sum('no_goods'); // sum of all goods
+     $totalAmount   = $data->orderItems()->sum('total_amount'); // sum of all amounts
+ 
+     // Update the order with new totals
+     $data->update([
+         'quantity' => $totalQuantity,
+         'amount'   => $totalAmount,
+     ]);
+
+    }
     public function destroy($id){
         $data=Order::find($id);
         $data->delete();
