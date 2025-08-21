@@ -69,27 +69,45 @@ class OrderController extends Controller
             "items.*.no_goods"=>"required|integer|min:1",
         ]);
         $data=Order::findOrFail($id);
+       
+         $data->orderItems()->delete();
+
         foreach($validated['items'] as $item){
-            $product = Product::findOrFail($item['product_id']);
-            $totalAmount = $product->price * $item['no_goods'];
-        
-            $data->orderItems()->updateOrCreate(
-                [ 
-                    "product_id" => $item['product_id'] // match condition
-                ],
-                [
-                    "order_id" => $data->id,
-                    "no_goods" => $item['no_goods'],
-                    "total_amount" => $totalAmount
-                ]
-            );
-        
-            $overAllQuantity += $item['no_goods'];
-            $overAllAmount  += $totalAmount;
+            $product=Product::findOrFail($item['product_id']);
+
+            $totalAmount=$product->price * $item['no_goods'];
+
+            // $data->orderItems()->updateOrCreate([
+            //     //find by these
+            //     [
+            //         "order_id"=>$data->id
+                
+            //     ],//update or create these
+            //     [
+                    
+            //     "product_id"=>$item['product_id'],
+            //     "no_goods"=>$item['no_goods'],
+            //     "total_amount"=>$totalAmount
+
+            //     ]
+            // ]);
+
+            $data->orderItems()->create([
+                "order_id"=>$data->id,
+                "product_id"=>$item['product_id'],
+                "no_goods"=>$item['no_goods'],
+                "total_amount"=>$totalAmount
+            ]);
+            $overAllQuantity+= $item['no_goods'];
+            $overAllAmount+=$totalAmount;
         }
-        
+        $result=$data->update([
+            "quantity"=>$overAllQuantity,
+            'amount'=>$overAllAmount,
+        ]);
         return response()->json([
-            "message"=>"order Updated Successfully"
+            "message"=>"order Updated Successfully",
+            "data"=>$data->orderItems
         ]);
 
 
