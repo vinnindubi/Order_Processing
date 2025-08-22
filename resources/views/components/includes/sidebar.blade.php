@@ -31,6 +31,13 @@
               <span class="hide-menu">Customers</span>
             </a>
           </li>
+          {{-- orders section --}}
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="/orders" aria-expanded="false">
+              <i class="ti ti-cards"></i>
+              <span class="hide-menu">Orders</span>
+            </a>
+          </li>
           {{-- products section --}}
           <li class="sidebar-item">
             <a class="sidebar-link justify-content-between has-arrow" href="javascript:void(0)" aria-expanded="false">
@@ -117,6 +124,7 @@
               </li>
             </ul>
           </li>
+          
           <li class="sidebar-item">
             <a class="sidebar-link" href="/" aria-expanded="false">
               <i class="ti ti-cards"></i>

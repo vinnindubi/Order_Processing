@@ -10,16 +10,19 @@ class OrderController extends Controller
 {
     public function home(){
         $data = Order::all();
-        return response()->json([
-            "data"=>$data
-        ],200);
+        // return response()->json([
+        //     "data"=>$data
+        // ],200);
+        return view('components.pages.orders',['orderData'=> $data]);
         }
     public function show($id){
         $data=Order::find($id);
+        //return view('components.pages.viewOrderForm',['orderData'=>$data->products]);
         return response()->json([
             "message"=>"order returned ",
-            "data"=>$data->products
+            "data"=>$data->orderItems
         ]);
+        
     }
     public function store(Request $request){
         $overAllAmount=0;
@@ -132,8 +135,6 @@ class OrderController extends Controller
     public function destroy($id){
         $data=Order::find($id);
         $data->delete();
-        return response()->json([
-           "message"=>"order deleted successfully"
-        ]);
+        return redirect()->back()->with('success','order deleted successfully');
     }
 }

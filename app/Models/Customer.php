@@ -7,7 +7,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Customer extends Model
 { use HasApiTokens;
-    protected $fillable=['name','email','password'];
+    protected $fillable=['name','phone_number'];
     protected $casts =[
         'password'=>'hashed'
      ];

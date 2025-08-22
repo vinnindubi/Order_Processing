@@ -15,23 +15,11 @@ class CustomerController extends Controller
             "email"=>"required|email|exists:customers:id",
             "password"=>"required|string|min:6"
         ]);
-        if(!Auth::guard('customer-api')->attempt($request->only('email','password'))){
-            return response()->json([
-                "error"=>"unauthorized"
-            ],401);
-        }
-        $customer=Auth::guard('customer-api')->user();
-        $token=$customer->createToken('customerToken')->accessToken;
-        return response()->json([
-            "Token"=>$token
-        ]);
+        
     }
     public function index(){
         $data=Customer::all();
-        return response()->json([
-            "message"=>"customers returned success",
-            "data"=>$data
-        ],200);
+        return view('components.pages.customers',['customerData'=>$data]);
 
     }
     public function show($id){
@@ -47,17 +35,14 @@ class CustomerController extends Controller
         $result=$data->orderItems;
         return response($result);
     }
+    
     public function store(Request $request){
         $validated=$request->validate([
-            "name"=>"required",
-            "email"=>"required|email|unique:customers,email",
-            "password"=>"required|string|min:6",
-            "confirm_password|same:password"
+            
+            "phone_number"=>"required|string"
         ]);
         $data=Customer::create([
-            "name"=>$validated['name'],
-            "email"=>$validated['email'],
-            "password"=>$validated['password']
+            "phone_number"=>$validated['phone_number']
         ]);
         return response()->json([
             "message"=>"customer created successfully",
@@ -74,8 +59,6 @@ class CustomerController extends Controller
     public function destroy($id){
         $data=Customer::findOrFail($id);
         $data->delete();
-        return response()->json([
-            "message"=>"customer deleted successfully"
-        ]);
+        return redirect()->back()->with('success', 'Customer deleted successfully.');
     }
 }
