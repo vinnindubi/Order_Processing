@@ -8,5 +8,16 @@ use Laravel\Sanctum\HasApiTokens;
 class Customer extends Model
 { use HasApiTokens;
     protected $fillable=['name','email','password'];
+    protected $casts =[
+        'password'=>'hashed'
+     ];
+     public function orders(){
+        return $this->hasMany(Order::class);
+        
+     }
+     public function orderItems(){
+        return $this->hasManyThrough(OrderItem::class,Order::class);
+     }
 
+     
 }

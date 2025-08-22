@@ -25,6 +25,7 @@ class OrderController extends Controller
         $overAllAmount=0;
         $overAllquantity=0;
         $validated=$request->validate([
+            "customer_id"=>"required|exists:customers,id",
             "items"=>"required|array",
             "items.*.product_id"=>"required|exists:products,id",
             "items.*.no_goods"=>"required|min:1",
@@ -32,9 +33,10 @@ class OrderController extends Controller
         $data=Order::create([
             "quantity"=>0,
             'amount'=>0,
+            "customer_id"=>$validated['customer_id']
             
         ]);
-        /*her we are creating multiple record in the orderItem table .
+        /*here we are creating multiple record in the orderItem table .
         so we are collecting an array of products then we loop as we create them*/
         foreach( $validated['items'] as $item )
         {
@@ -50,14 +52,13 @@ class OrderController extends Controller
             $overAllquantity+=$item['no_goods'];
             $overAllAmount+=$totalAmount;
         }
-            $result=$data->update([
+           $data->update([
                 "quantity"=>$overAllquantity,
             'amount'=>$overAllAmount,
             ]);
 
         return response()->json([
-            "message"=>"order created successfully",
-            "data"=>$result
+            "message"=>"order created successfully"
         ]);
     }
     public function update(Request $request, $id){
@@ -101,9 +102,10 @@ class OrderController extends Controller
             $overAllQuantity+= $item['no_goods'];
             $overAllAmount+=$totalAmount;
         }
+
         $result=$data->update([
             "quantity"=>$overAllQuantity,
-            'amount'=>$overAllAmount,
+            'amount'=>$overAllAmount
         ]);
         return response()->json([
             "message"=>"order Updated Successfully",

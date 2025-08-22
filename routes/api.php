@@ -19,7 +19,13 @@ Route::get('/', function () {
 Route::post('/register',[HomeController::class,'register']);
 Route::resource('/login',HomeController::class);
 
+Route::get('/customers/{id}/orders',[CustomerController::class,'getOrders']);
+Route::middleware('auth:customer-api')->group(function(){
+
+    Route::post('/customersLogin',[CustomerController::class,'customerLogin']);
+});
 Route::apiResource('/customers',CustomerController::class);
+
 
 Route::post('/roles/assignPermission',[PermissionRoleController::class,'assignRole']);
 Route::apiResource('/roles',RoleController::class);

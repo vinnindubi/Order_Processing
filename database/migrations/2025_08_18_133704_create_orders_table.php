@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('customer_id')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('customer_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('quantity');//total items the customer bought.
             $table->integer('amount');//paid total
             $table->foreignId('payment_id')->nullable()->constrained('payments')->onDelete('cascade');
