@@ -54,6 +54,6 @@ class HomeController extends Controller
             'customerData' => $data]);
     }
     public function create(){
-        return view('components.pages.customerForm');
+        return view('components.forms.customerForm');
     }
 }

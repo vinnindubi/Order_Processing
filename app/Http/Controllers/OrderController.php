@@ -17,10 +17,11 @@ class OrderController extends Controller
         }
     public function show($id){
         $data=Order::find($id);
-        //return view('components.pages.viewOrderForm',['orderData'=>$data->products]);
+        //return view('components.forms.viewOrderForm',['orderData'=>$data->products]);
         return response()->json([
             "message"=>"order returned ",
-            "data"=>$data->orderItems
+            //"customer"=>$data->customer->phone_number,
+            "products"=>$data->products
         ]);
         
     }
