@@ -7,7 +7,7 @@
             <div class="card-body">
               <h5 class="card-title fw-semibold mb-4">All Orders</h5>
               <div class='d-grid gap-2 d-md-flex justify-content-md-end'>
-                <a href="{{route('order.home')}}" class='btn btn-primary me-md-2'>Create Order</a>
+                <a href="{{route('order.createOrder')}}" class='btn btn-primary me-md-2'>Create Order</a>
               </div>
               <table class="table">
                 <thead class="thead-dark">

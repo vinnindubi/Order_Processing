@@ -20,7 +20,6 @@ Route::get('/login',[HomeController::class,'login']);
 Route::get('/customers',[HomeController::class,'customers']);
 Route::get('/create',[HomeController::class,'create'])->name('customer.create');
 
-
 // 
 
 Route::get('/customers/{id}/orders',[CustomerController::class,'getOrders']);
@@ -37,12 +36,16 @@ Route::delete('/customers/{id}',[CustomerController::class,'destroy'])->name('cu
 Route::post('/roles/assignPermission',[PermissionRoleController::class,'assignRole']);
 Route::apiResource('/roles',RoleController::class);
 
+Route::get('/products',[ProductController::class,'index'])->name('product.index');
+
 Route::get('/stkPush',[PaymentController::class,'stkPush']);
 Route::post('/mpesaCallback',[PaymentController::class,'mpesaCallback']);
 Route::apiResource('/products',ProductController::class);
 Route::get('/showOrders/{id}',[OrderController::class ,'show'])->name('order.show');
 Route::get('/orders',[OrderController::class ,'home'])->name('order.home');
 Route::put('/orders/{id}',[OrderController::class ,'update'])->name('order.update');
-Route::post('/orders',[OrderController::class,'store']);
+
+Route::get('/createOrder',[OrderController::class,'createOrder'])->name('order.createOrder');
+Route::post('/orders',[OrderController::class,'store'])->name('orders.store');
 Route::delete('/orders/{id}',[OrderController::class,'destroy'])->name('order.destroy');
 Route::delete('/ordersItems/{id}',[OrderController::class ,'deleteProduct']);

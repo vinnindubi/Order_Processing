@@ -25,6 +25,10 @@ class OrderController extends Controller
         ]);
         
     }
+    public function createOrder(){
+        $data=Product::all();
+        return view('components.forms.createOrderForm',['ProductsData'=>$data]);
+    }
     public function store(Request $request){
         $overAllAmount=0;
         $overAllquantity=0;

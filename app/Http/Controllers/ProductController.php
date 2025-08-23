@@ -9,10 +9,10 @@ class ProductController extends Controller
 {
    public function index(){
     $data=Product::all();
-
-    return response()->json([
-        "data"=>$data
-    ],200);
+    return view('components.pages.products',['ProductsData'=>$data]);
+    // return response()->json([
+    //     "data"=>$data
+    // ],200);
     }
    
    public function show($id){

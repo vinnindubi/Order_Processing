@@ -10,6 +10,7 @@
         <div class="body-wrapper">
                 @include('components.includes.header')
                 @yield('content')
+                @yield('scripts')
         </div>
    
     </body>

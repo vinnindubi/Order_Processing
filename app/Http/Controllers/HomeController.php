@@ -28,17 +28,7 @@ class HomeController extends Controller
             "email"=>$validated['email'],
             "password"=>$validated['password']
         ]);
-        // if($data){
-        // return response()->json([
-        //     "message"=>"user created successfully",
-        //     "data"=>$data
-        // ], 200);
-        // }
-        // else{
-        //     return response()->json([
-        //         "message"=>"failed to create user"
-        //     ]);
-        // }
+        
         if ($data){
             return redirect('/login')->with('success','user created successfully');
         }
