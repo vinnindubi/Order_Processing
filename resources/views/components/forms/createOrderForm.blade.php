@@ -6,9 +6,19 @@
 
         <form id="orderForm" action="{{ route('orders.store') }}" method="POST">
             @csrf
+            
 
+            <!-- Totals Section -->
+            
+            <div class="mt-4  justify-content-end d-grid">
+                <h5>Total Items: <span id="totalItems">0</span></h5>
+                <h5>Total Price: Ksh <span id="totalPrice">0</span></h5>
+                <button type="submit" class="btn btn-primary mt-3">Place Order</button>
+            </div>
+            
+            
             <!-- Customer phone number -->
-            <div class="mb-3">
+            <div class="mb-3 ">
                 <label for="phone" class="form-label">Customer Phone Number</label>
                 <input type="text" name="phone_number" id="phone" class="form-control" required>
             </div>
@@ -38,10 +48,7 @@
             </div>
 
             <!-- Totals Section -->
-            <div class="mt-4">
-                <h5>Total Items: <span id="totalItems">0</span></h5>
-                <h5>Total Price: Ksh <span id="totalPrice">0</span></h5>
-            </div>
+            
 
             <button type="submit" class="btn btn-primary mt-3">Place Order</button>
         </form>
@@ -50,23 +57,55 @@
 @endsection
 
 @section('scripts')
-    <script>
+    <script >
     document.addEventListener('DOMContentLoaded',function(){
         const checkboxes=document.querySelectorAll('.product-check');
         const totalItemsEl=document.getElementById('totalItems');
         const totalPriceEl=document.getElementById('totalPrice');
 
-        function updateOrder(){
-             let totalQuantity = 0;
-            let totalPrice = 0;           
+        const form = document.getElementById('orderForm');
+        form.addEventListener('submit',(e)=> {
+                   e.preventDefault(); //prevents default form submission
+                   const phoneNumber =  document.getElementById('phone').value;
+                   const items=[];
+                   const checkboxes = document.querySelectorAll('.product-check');
+                   checkboxes.forEach((checkbox) => {
+                    if(checkbox.checked){
+                        const product_id = checkbox.getAttribute('data-id');
+                         const card = checkbox.closest('.card');
+                         const quantityInput= card.querySelector('.qty-input');
+                         const quantity = parseInt(quantityInput.value) || 0;
+                            if (quantity > 0){
+                                items.push(
+                                    {
+                                    product_id : product_id,
+                                    no_goods : quantity   });
+                            }
+                    }
+                   });
 
+                   axios.post('/orders',{
+                    phone_number : phoneNumber,
+                    items : items
+                   })
+                   .then((response)=>{
+                    alert('success');
+                   })
+                   .catch(error=>{
+                    alert('falied to create order');
+                   });
+                  
+        });
+
+        function updateOrder(){
+            let totalQuantity = 0;
+            let totalPrice = 0;           
             checkboxes.forEach((checkbox) => {
             const singleCard = checkbox.closest('.card');
             const quantInput = singleCard.querySelector('.qty-input');
             let price=0;
             let quantity=0;
             let wholePrice=0;
-
                 if(checkbox.checked && quantInput.value){
                         const price = parseFloat(checkbox.getAttribute('data-price'));
                             quantity =parseInt(quantInput.value) || 0;
@@ -76,8 +115,7 @@
                 totalPrice+=wholePrice;
             });
             totalItemsEl.textContent=totalQuantity;
-            totalPriceEl.textContent=totalPrice;
-             
+            totalPriceEl.textContent=totalPrice;            
         }
         checkboxes.forEach((checkbox) => {
             const singleCard= checkbox.closest('.card');
@@ -92,12 +130,9 @@
                 updateOrder();
             });
             quantInput.addEventListener('input',updateOrder);
-
         });
     });
 
-
-    
     </script>  
 
 @endsection

@@ -33,7 +33,7 @@ class OrderController extends Controller
         $overAllAmount=0;
         $overAllquantity=0;
         $validated=$request->validate([
-            "customer_id"=>"required|exists:customers,id",
+            "phone_number"=>"required",
             "items"=>"required|array",
             "items.*.product_id"=>"required|exists:products,id",
             "items.*.no_goods"=>"required|min:1",
@@ -41,7 +41,7 @@ class OrderController extends Controller
         $data=Order::create([
             "quantity"=>0,
             'amount'=>0,
-            "customer_id"=>$validated['customer_id']
+            "phone_number"=>$validated['phone_number']
             
         ]);
         /*here we are creating multiple record in the orderItem table .

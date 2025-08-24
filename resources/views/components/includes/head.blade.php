@@ -9,6 +9,7 @@
   <script src="./assets/js/sidebarmenu.js"></script>
   <script src="./assets/js/app.min.js"></script>
   <script src="./assets/libs/simplebar/dist/simplebar.js"></script>
+  @vite('resources/js/app.js')
   <!-- solar icons -->
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
 </head>
