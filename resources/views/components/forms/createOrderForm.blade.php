@@ -6,23 +6,22 @@
 
         <form id="orderForm" action="{{ route('orders.store') }}" method="POST">
             @csrf
-            
-
             <!-- Totals Section -->
-            
             <div class="mt-4  justify-content-end d-grid">
                 <h5>Total Items: <span id="totalItems">0</span></h5>
                 <h5>Total Price: Ksh <span id="totalPrice">0</span></h5>
                 <button type="submit" class="btn btn-primary mt-3">Place Order</button>
             </div>
-            
-            
             <!-- Customer phone number -->
-            <div class="mb-3 ">
-                <label for="phone" class="form-label">Customer Phone Number</label>
-                <input type="text" name="phone_number" id="phone" class="form-control" required>
+            <div class="dropdown mt-3 d">
+                    <select class="form-control">
+                        <option value=""> select customer</option>
+                        @foreach ($customerData as $customer)
+                        <option id="customer_phone" value="{{$customer->phone_number}}">{{$customer->phone_number}}</option>
+                        @endforeach
+                        
+                    </select>
             </div>
-
             <h4>Select Products</h4>
             <div class="row">
                 @foreach($ProductsData as $product)
@@ -66,7 +65,7 @@
         const form = document.getElementById('orderForm');
         form.addEventListener('submit',(e)=> {
                    e.preventDefault(); //prevents default form submission
-                   const phoneNumber =  document.getElementById('phone').value;
+                   const phoneNumber =  document.getElementById('customer_phone').value;
                    const items=[];
                    const checkboxes = document.querySelectorAll('.product-check');
                    checkboxes.forEach((checkbox) => {

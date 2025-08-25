@@ -27,6 +27,8 @@ Route::post('/customersLogin',[CustomerController::class,'customerLogin']);
 
 //customer controller
 Route::get('/customers',[CustomerController::class,'index'])->name('customer.index');
+Route::post('/customers',[CustomerController::class,'showCustomerDetails'])->name('customer.showCustomerDetails');
+Route::post('/customers',[CustomerController::class,'store'])->name('customer.store');
 Route::get('/customers/{id}',[CustomerController::class,'show']);
 Route::put('/customers/{id}',[CustomerController::class,'update']);
 Route::delete('/customers/{id}',[CustomerController::class,'destroy'])->name('customer.destroy');

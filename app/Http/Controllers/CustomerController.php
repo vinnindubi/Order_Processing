@@ -22,6 +22,7 @@ class CustomerController extends Controller
         return view('components.pages.customers',['customerData'=>$data]);
 
     }
+    
     public function show($id){
         $data=Customer::find($id);
         return response()->json([
@@ -37,17 +38,21 @@ class CustomerController extends Controller
     }
     
     public function store(Request $request){
+
         $validated=$request->validate([
-            
-            "phone_number"=>"required|string"
+            "name"=>"required",
+            "phone_number"=>"required|string",
+            "password"=>"required",
+            "confirm_password"=>"required|same:password"
         ]);
         $data=Customer::create([
-            "phone_number"=>$validated['phone_number']
+            "name"=>$request->input('name'),
+            "phone_number"=>$request->input('phone_number'),
+            "password"=>$request->input('password')
+
         ]);
-        return response()->json([
-            "message"=>"customer created successfully",
-            "data"=>$data
-        ]);
+       
+        return back()->with('success','customer created successfully');
 
     }
     public function update(Request $request,$id){

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Customer;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -25,23 +26,29 @@ class OrderController extends Controller
         ]);
         
     }
+    
     public function createOrder(){
+        $value=Customer::all();
         $data=Product::all();
-        return view('components.forms.createOrderForm',['ProductsData'=>$data]);
+        return view('components.forms.createOrderForm',['ProductsData'=>$data,'customerData'=>$value]);
     }
+    
     public function store(Request $request){
         $overAllAmount=0;
         $overAllquantity=0;
         $validated=$request->validate([
-            "phone_number"=>"required",
+            "phone_number"=>"required|exists:customers,phone_number",
             "items"=>"required|array",
             "items.*.product_id"=>"required|exists:products,id",
             "items.*.no_goods"=>"required|min:1",
         ]);
+
+        $value= Customer::where('phone_number',$validated['phone_number'])->value('id');
+
         $data=Order::create([
             "quantity"=>0,
             'amount'=>0,
-            "phone_number"=>$validated['phone_number']
+            "customer_id"=>$value
             
         ]);
         /*here we are creating multiple record in the orderItem table .
