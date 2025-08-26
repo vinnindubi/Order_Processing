@@ -42,11 +42,12 @@ Route::get('/products',[ProductController::class,'index'])->name('product.index'
 
 Route::get('/stkPush',[PaymentController::class,'stkPush']);
 Route::post('/mpesaCallback',[PaymentController::class,'mpesaCallback']);
-Route::apiResource('/products',ProductController::class);
-Route::get('/showOrders/{id}',[OrderController::class ,'show'])->name('order.show');
-Route::get('/orders',[OrderController::class ,'home'])->name('order.home');
-Route::put('/orders/{id}',[OrderController::class ,'update'])->name('order.update');
 
+
+Route::apiResource('/products',ProductController::class);
+Route::get('/orders',[OrderController::class ,'home'])->name('order.home');
+Route::get('/orders/view/{id}',[OrderController::class ,'show'])->name('order.show');
+Route::put('/orders/{id}',[OrderController::class ,'update'])->name('order.update');
 Route::get('/createOrder',[OrderController::class,'createOrder'])->name('order.createOrder');
 Route::post('/orders',[OrderController::class,'store'])->name('orders.store');
 Route::delete('/orders/{id}',[OrderController::class,'destroy'])->name('order.destroy');

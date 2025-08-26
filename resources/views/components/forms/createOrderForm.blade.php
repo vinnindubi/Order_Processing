@@ -14,12 +14,11 @@
             </div>
             <!-- Customer phone number -->
             <div class="dropdown mt-3 d">
-                    <select class="form-control">
+                    <select  id='customer_id' class="form-control getvalue">
                         <option value=""> select customer</option>
                         @foreach ($customerData as $customer)
-                        <option id="customer_phone" value="{{$customer->phone_number}}">{{$customer->phone_number}}</option>
+                        <option  value="{{$customer->id}}">{{$customer->id}} {{$customer->name}}</option>
                         @endforeach
-                        
                     </select>
             </div>
             <h4>Select Products</h4>
@@ -65,7 +64,7 @@
         const form = document.getElementById('orderForm');
         form.addEventListener('submit',(e)=> {
                    e.preventDefault(); //prevents default form submission
-                   const phoneNumber =  document.getElementById('customer_phone').value;
+                   const customerId =  document.getElementById('customer_id').value;
                    const items=[];
                    const checkboxes = document.querySelectorAll('.product-check');
                    checkboxes.forEach((checkbox) => {
@@ -84,7 +83,7 @@
                    });
 
                    axios.post('/orders',{
-                    phone_number : phoneNumber,
+                    customer_id : customerId,
                     items : items
                    })
                    .then((response)=>{

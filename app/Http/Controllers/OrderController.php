@@ -18,12 +18,12 @@ class OrderController extends Controller
         }
     public function show($id){
         $data=Order::find($id);
-        //return view('components.forms.viewOrderForm',['orderData'=>$data->products]);
-        return response()->json([
-            "message"=>"order returned ",
-            //"customer"=>$data->customer->phone_number,
-            "products"=>$data->products
-        ]);
+        $value= $data->products;
+        //return response($value);
+         return view('components.forms.viewOrder',[
+             'orderData'=>$data,
+            'ordeItems'=>$value
+            ]);
         
     }
     
@@ -37,18 +37,17 @@ class OrderController extends Controller
         $overAllAmount=0;
         $overAllquantity=0;
         $validated=$request->validate([
-            "phone_number"=>"required|exists:customers,phone_number",
+            "customer_id"=>"required|exists:customers,id",
             "items"=>"required|array",
             "items.*.product_id"=>"required|exists:products,id",
             "items.*.no_goods"=>"required|min:1",
         ]);
 
-        $value= Customer::where('phone_number',$validated['phone_number'])->value('id');
-
+        //$value= Customer::find($validated['customer_id']);
         $data=Order::create([
             "quantity"=>0,
             'amount'=>0,
-            "customer_id"=>$value
+            "customer_id"=>$validated['customer_id']
             
         ]);
         /*here we are creating multiple record in the orderItem table .

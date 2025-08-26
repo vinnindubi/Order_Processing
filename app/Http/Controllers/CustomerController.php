@@ -52,7 +52,7 @@ class CustomerController extends Controller
 
         ]);
        
-        return back()->with('success','customer created successfully');
+        return redirect(route('customer.index'))->with('success','customer created successfully');
 
     }
     public function update(Request $request,$id){

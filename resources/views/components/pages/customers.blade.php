@@ -5,6 +5,21 @@
         <div class="container-fluid">
           <div class="card">
             <div class="card-body">
+              @if (session('success'))
+                          <div class="alert alert-success">
+                            {{ session('success') }}
+                          </div>
+              @endif
+                        {{-- Show validation errors --}}
+              @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul class="mb-0">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+              @endif
               <h5 class="card-title fw-semibold mb-4">Customers</h5>
               <div class='d-grid gap-2 d-md-flex justify-content-md-end'>
                 <a href="{{route('customer.create')}}" class='btn btn-primary me-md-2'>Create Customer</a>
