@@ -6,6 +6,8 @@ use App\Models\OrderItem;
 use App\Models\Customer;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
+
 
 class OrderController extends Controller
 {
@@ -70,10 +72,10 @@ class OrderController extends Controller
                 "quantity"=>$overAllquantity,
             'amount'=>$overAllAmount,
             ]);
-
-        return response()->json([
-            "message"=>"order created successfully"
-        ]);
+            return redirect('/orders')->with('success','order created successfully');
+        // return response()->json([
+        //     "message"=>"order created successfully"
+        // ]);
     }
     public function update(Request $request, $id){
         $overAllQuantity=0;

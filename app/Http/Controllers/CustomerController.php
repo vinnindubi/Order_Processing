@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class CustomerController extends Controller
 {
@@ -52,8 +53,8 @@ class CustomerController extends Controller
 
         ]);
        
-        return redirect(route('customer.index'))->with('success','customer created successfully');
-
+        Alert::success('success','customer created successfully');
+        return redirect('/customers');
     }
     public function update(Request $request,$id){
         $data=Customer::find($id);
@@ -64,6 +65,7 @@ class CustomerController extends Controller
     public function destroy($id){
         $data=Customer::findOrFail($id);
         $data->delete();
-        return redirect()->back()->with('success', 'Customer deleted successfully.');
+        alert()->success('success','customer deleted successfully');
+        return redirect()->back();
     }
 }

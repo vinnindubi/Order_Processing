@@ -11,6 +11,7 @@
                 @include('components.includes.header')
                 @yield('content')
                 @yield('scripts')
+                @include('sweetalert::alert')
         </div>
    
     </body>

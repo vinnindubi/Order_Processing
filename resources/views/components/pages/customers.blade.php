@@ -42,12 +42,10 @@
                     <td>
                       <div class='d-grid gap-2 d-md-flex '>
                       <button type="button" class="btn btn-outline-success">Update</button>
-                      <form action="{{route('customer.destroy',$customer->id)}}" method="POST"  >
+                      <form  id="delete-form-{{ $customer->id }} action="{{route('customer.destroy',$customer->id)}}" method="POST"  >
                           @csrf
                           @method('DELETE')
-                        <button type="submit" class="btn btn-outline-danger"
-                        onclick="return confirm('Are you sure you want to delete this user?')"
-                        >Delete</button>
+                        <button type="button" onclick="confirmDelete({{ $customer->id }})" class="btn btn-outline-danger" >Delete</button>
                         
                       </form>
                       </div>
@@ -63,4 +61,26 @@
         </div>
       </div>
  
+@endsection
+
+@section('scripts')
+    <script>
+      
+      function confirmDelete(customerId) {
+          Swal.fire({
+              title: 'Are you sure?',
+              text: "This action cannot be undone!",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#d33',
+              cancelButtonColor: '#3085d6',
+              confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  document.getElementById('delete-form-' + customerId).submit();
+              }
+          });
+      }
+        
+</script>
 @endsection

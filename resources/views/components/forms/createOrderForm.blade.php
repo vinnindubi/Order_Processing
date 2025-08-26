@@ -3,6 +3,12 @@
 @section('content')
 <div class="body-wrapper-inner">
     <div class="container-fluid">
+        @if(session('success'))
+            <div>
+                <p>{{session('success')}}</p>
+            </div>
+        @endif
+                    
 
         <form id="orderForm" action="{{ route('orders.store') }}" method="POST">
             @csrf
