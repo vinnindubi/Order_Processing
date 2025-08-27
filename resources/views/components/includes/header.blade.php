@@ -30,7 +30,7 @@
             
             <i class="iconShopping btn btn-sm btn-outline-success mt-2" type="button"  href="">Cart
               <i class="ti ti-shopping-cart"></i>
-              <span class="" >0</span>
+              <span class="badge bg-danger ms-1">0</span>
             </i>
           </li>
            
@@ -75,26 +75,26 @@
     closeButton.addEventListener('click',function(){
      cartBox.classList.remove('active');
     });
-    if(typeof(Storage)!== 'undefined')
-    {
-      //  const object={
-      //   name: "Vincent Ndereba",
-      //   age: "21",
-      //   items:{
-      //     product:"sugar",
-      //     price:300,
-      //     quantity:2
-      //   }
-      //  };
-      // localStorage.setItem("localStorageDemo",JSON.stringify(object));  
-      const data=localStorage.getItem('localStorageDemo'); 
-      
-      console.log(JSON.parse(data));   
+
+    const addToCart=document.querySelectorAll('#addToCartBtn');
+    let items=[];
+    addToCart.forEach((cartItem)=>{
+      cartItem.addEventListener('click',(e)=>{
+        // alert('we are here');
+        console.log(e.target.parentElement);
+        if(typeof(Storage)!== 'undefined'){
+        let item={
+          name:e.target
+        }
     }
     else
      {
-      console.log('local Storage is not working')
+      alert('local Storage is not working');
     }
-  });
+      });
+    });
+
+   
+   });
 </script>
 

@@ -15,7 +15,7 @@
                              class="card-img-top" alt="{{ $product->name }}"> --}}
 
                         <div class="card-body">
-                            <h5 class="card-title">{{ $product->name }}</h5>
+                            <h5 class="card-title-{{ $product->name }}">{{ $product->name }}</h5>
                             <p class="card-text text-muted">
                                 {{ $product->description }}
                             </p>
@@ -23,33 +23,51 @@
                         </div>
 
                         <div class="card-footer bg-white text-center ">
-                           <form action="{{route('cart.store')}}" method="POST">
-                            @csrf 
-                            <button type="button"  class="btn btn-sm btn-success ">Add to Cart</button>
-                           </form>
+                            <button id="addToCartBtn" type="button"  class="btn btn-sm btn-success ">Add to Cart</button>
+                          
                             <button class="btn btn-sm btn-outline-primary mt-2">View</button>
                         </div>
                     </div>
                 </div>
             @endforeach
-        </div>
-    </div>
-</div>
-{{-- shopping cart code --}}
-<div class=" cartBox position-fixed top-0 start-0 h-100 w-100 d-flex justify-content-center align-items-center  bg-dark bg-opacity-75 z-9999">
+            {{-- shopping cart code --}}
+<div class=" cartBox position-absolute h-100 w-100 d-flex justify-content-center align-items-center  ">
     
-    <div class=" cart d-flex  p-2 bg-white w-50 h-25">
-        <h3 class="flex-grow-1 text-center m-0 color-blue text-primary">Shopping Cart</h3>
+    <div class=" p-2 bg-white w-100 h-100 ">
+        <div class="d-flex">
+            <h3 class="flex-grow-1 text-center m-0 color-blue text-primary">Shopping Cart</h3>
         <button type="button" class="btn-close cartButton ms-2 " aria-label="Close"></button>
-    </div>
-    <div>
-        <table>
-            <thead>
-                <th>pr</th>
-            </thead>
+        </div>
+        
+    
+        <div>
+        <table class="table table-striped table-bordered table-hover">
+        <thead class="  table-info" >
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+            </tr>
+        </thead>
+        <tbody class="table-bordered">
+            <tr>
+            <td> name</td>
+            <td> price</td>
+            <td> quantity</td>
+            <td> Total price</td>
+        </tr>
+        </tbody>
         </table>
     </div>
+    </div>
+    
 </div>
+        </div>
+        
+    </div>
+</div>
+
 
 </div>
 @endsection
