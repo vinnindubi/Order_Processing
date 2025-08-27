@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
@@ -19,6 +20,7 @@ Route::post('/register',[HomeController::class,'register']);
 Route::get('/login',[HomeController::class,'login']);
 Route::get('/customers',[HomeController::class,'customers']);
 Route::get('/create',[HomeController::class,'create'])->name('customer.create');
+Route::post('/cart',[CartController::class,'store'])->name('cart.store');
 
 // 
 
