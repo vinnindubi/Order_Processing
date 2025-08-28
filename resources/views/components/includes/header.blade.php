@@ -30,7 +30,7 @@
             
             <i class="iconShopping btn btn-sm btn-outline-success mt-2" type="button"  href="">Cart
               <i class="ti ti-shopping-cart"></i>
-              <span class="badge bg-danger ms-1">0</span>
+              <span class="badge bg-danger ms-1 postHere">0</span>
             </i>
           </li>
            
@@ -69,6 +69,7 @@
     const cartItem = document.querySelector('.iconShopping');
     const closeButton = document.querySelector('.btn-close');
     const cartBox= document.querySelector('.cartBox');
+    const updateIcon= document.querySelector('.postHere');
     cartItem.addEventListener('click',function(){
      cartBox.classList.add('active');
     });
@@ -79,22 +80,51 @@
     const addToCart=document.querySelectorAll('#addToCartBtn');
     let items=[];
     addToCart.forEach((cartItem)=>{
-      cartItem.addEventListener('click',(e)=>{
-        // alert('we are here');
-        console.log(e.target.parentElement);
+      const card= cartItem.closest('.card');
+      const productId=card.querySelector('.product-id').innerText;
+      const h1Value=card.querySelector('.card-needed').innerText;
+      const cardDesc=card.querySelector('.card-text').innerText;
+      const productPrice=card.querySelector('.productPrice').innerText;
+      cartItem.addEventListener('click',()=>{
         if(typeof(Storage)!== 'undefined'){
         let item={
-          name:e.target
+          id: productId,
+          name: h1Value,
+          description: cardDesc,
+          price: productPrice,
+          number:1
         }
+        if(JSON.parse(localStorage.getItem('localDemo')) === null){
+          items.push(item);
+            localStorage.setItem('localDemo',JSON.stringify(items));
+            window.location.reload();
+        }else{
+           const response=JSON.parse(localStorage.getItem('localDemo'));
+           response.forEach(data=>{
+            if(item.id == data.id){
+              item.number = data.number +1;
+            } else {
+              items.push(data); // <-- pushes the existing product from storage
+            }
+           });
+           items.push(item); //adds the new item clicked to the array.
+           localStorage.setItem('localDemo',JSON.stringify(items));
+           window.location.reload();
+        }        
     }
     else
      {
       alert('local Storage is not working');
     }
       });
+      
     });
-
-   
+    //adding data to shopping cart
+    let no=0;
+      JSON.parse(localStorage.getItem('localDemo')).map(data=>{
+          no = no+data.number;
+      });
+      updateIcon.textContent = no;
    });
 </script>
 

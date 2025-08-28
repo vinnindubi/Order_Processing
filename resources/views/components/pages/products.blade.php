@@ -8,25 +8,17 @@
 
         <div class="row">
             @foreach($ProductsData as $product)
-                <div class="col-md-3 mb-4">
-                    <div class="card h-100 shadow-sm">
-                        {{-- Product Image --}}
-                        {{-- <img src="{{ $product->image_url ?? asset('assets/images/default-product.jpg') }}" 
-                             class="card-img-top" alt="{{ $product->name }}"> --}}
-
-                        <div class="card-body">
-                            <h5 class="card-title-{{ $product->name }}">{{ $product->name }}</h5>
-                            <p class="card-text text-muted">
+                <div class="col-md-3 mb-2">
+                    <div class="card h-100 shadow-sm ">
+                            <p class="product-id" hidden>{{$product->id}}</p>
+                            <h5 class="card-title card-needed ">{{ $product->name }}</h5>
+                            <p class="card-text text-muted ">
                                 {{ $product->description }}
                             </p>
-                            <h6 class="text-primary">Ksh {{ number_format($product->price, 2) }}</h6>
-                        </div>
-
-                        <div class="card-footer bg-white text-center ">
-                            <button id="addToCartBtn" type="button"  class="btn btn-sm btn-success ">Add to Cart</button>
-                          
-                            <button class="btn btn-sm btn-outline-primary mt-2">View</button>
-                        </div>
+                            <h6 class="text-primary productPrice">Ksh {{ number_format($product->price, 2) }}</h6>                    
+                            <button id="addToCartBtn" type="button"  class="btn btn-sm btn-success text-center ">Add to Cart</button>         
+                            <button class="btn btn-sm btn-outline-primary mt-2 text-center">View</button>
+                        
                     </div>
                 </div>
             @endforeach
@@ -70,13 +62,6 @@
 
 
 </div>
-@endsection
-@section('scripts')
-    <script>
-       // const cartItems= document.querySelector('shoppingCartItem')
- 
-        
-    </script>
 @endsection
 
 @section('style')
