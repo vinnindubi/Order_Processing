@@ -54,3 +54,4 @@ Route::get('/createOrder',[OrderController::class,'createOrder'])->name('order.c
 Route::post('/orders',[OrderController::class,'store'])->name('orders.store');
 Route::delete('/orders/{id}',[OrderController::class,'destroy'])->name('order.destroy');
 Route::delete('/ordersItems/{id}',[OrderController::class ,'deleteProduct']);
+Route::get('/print_doc/{id}',[OrderController::class,'download'])->name('print.download');

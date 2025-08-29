@@ -68,8 +68,9 @@
     const cartBox= document.querySelector('.cartBox');
     const updateIcon= document.querySelector('.postHere');
     cartItem.addEventListener('click',function(){
-     cartBox.classList.add('active');
+     cartBox.classList.toggle('active'); //if the cart was open it closes and if it was closed it opens.
     });
+
     closeButton.addEventListener('click',function(){
      cartBox.classList.remove('active');
     });
@@ -156,6 +157,14 @@
       });
       });
       const makeOrder=document.querySelector('.make-order');
+      if(JSON.parse(localStorage.getItem('localDemo')).length === 0){
+        makeOrder.setAttribute('hidden','true');
+         const getPosition = document.querySelector('.insert-position');
+        const newDiv = document.createElement('btn');
+        newDiv.innerHTML = '<a href="" class="btn btn-danger ">Go back to products page</a>';
+        getPosition.append(newDiv);
+
+      }
       makeOrder.addEventListener('click',()=>{
           let makeOrderItems=[];
           let arrayLocalItems= JSON.parse(localStorage.getItem('localDemo'));

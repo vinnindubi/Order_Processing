@@ -26,10 +26,10 @@
                     <h3 class="flex-grow-1 text-center m-0 color-blue text-primary">Shopping Cart</h3>
                     <button type="button" class="btn-close cartButton ms-2 " aria-label="Close"></button>
                 </div>
-                    <div>
+                    <div class="  insert-position">
                     <table class="table table-striped table-bordered table-hover retrive-table">
                     </table>
-                    <div class="d-flex  justify-content-end">
+                <div class="d-flex  justify-content-end">
                     <button type="button" class="btn btn-success make-order">Make Order</button>
                 </div>
                 </div>

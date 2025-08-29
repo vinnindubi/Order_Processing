@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 
 class OrderController extends Controller
@@ -27,6 +28,16 @@ class OrderController extends Controller
             'ordeItems'=>$value
             ]);
         
+    }
+    public function download($id){
+        $data=Order::find($id);
+        $value= $data->products;
+        $pdf= Pdf::loadView('components.forms.invoice',[
+            'orderData'=>$data,
+            'ordeItems'=>$value 
+        ]);
+
+        return $pdf->download('invoice.pdf');
     }
     
     public function createOrder(){
@@ -148,6 +159,7 @@ class OrderController extends Controller
     public function destroy($id){
         $data=Order::find($id);
         $data->delete();
-        return redirect()->back()->with('success','order deleted successfully');
+        Alert::success('Deletion','Order deleted succesfully');
+        return redirect('/orders');
     }
 }

@@ -42,10 +42,8 @@
                               <form action="{{route('order.destroy',$order->id)}}" method="POST"  >
                                 @csrf
                                 @method('DELETE')
-                              <a type="submit" class="dropdown-item"
-                              onclick="return confirm('Are you sure you want to delete this order?')"
-                              >Delete</a>
-                              
+                              <button type="submit" class="dropdown-item"
+                              >Delete</button>
                             </form>
                             </li>
                           </ul>
