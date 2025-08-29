@@ -96,7 +96,7 @@
                     alert('success');
                    })
                    .catch(error=>{
-                    alert('falied to create order');
+                    alert('failed to create order');
                    });
                   
         });

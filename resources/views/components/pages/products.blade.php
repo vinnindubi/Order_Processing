@@ -19,6 +19,7 @@
                 </div>
             @endforeach
             {{-- shopping cart code --}}
+            
         <div class=" cartBox position-absolute h-100 w-100 d-flex justify-content-center align-items-center  ">   
             <div class=" p-2 bg-white w-100 h-100 ">
                 <div class="d-flex">
@@ -27,23 +28,10 @@
                 </div>
                     <div>
                     <table class="table table-striped table-bordered table-hover retrive-table">
-                    {{-- <thead class="  table-info" >
-                        <tr>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Total Price</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-bordered">
-                        <tr>
-                        <td> name</td>
-                        <td> price</td>
-                        <td> quantity</td>
-                        <td> Total price</td>
-                    </tr>
-                    </tbody> --}}
                     </table>
+                    <div class="d-flex  justify-content-end">
+                    <button type="button" class="btn btn-success make-order">Make Order</button>
+                </div>
                 </div>
             </div>
         </div>

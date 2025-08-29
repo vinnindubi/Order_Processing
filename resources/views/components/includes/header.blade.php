@@ -97,7 +97,7 @@
             window.location.reload();
         }else{
            const response=JSON.parse(localStorage.getItem('localDemo'));
-           response.forEach(data=>{
+           response.map(data=>{
             if(item.id == data.id){
               item.number = data.number +1;
             } else {
@@ -123,33 +123,30 @@
       });
       updateIcon.textContent = no;
    //adding data to shopping cart table
-    const getTable= cartBox.querySelector('.retrive-table');
-    let tableData = '';
-    tableData += '<tr><th>ID</th> <th>Name</th> <th>Number</th><th>price</th><th>Action</th></tr>'
-    const localData= JSON.parse(localStorage.getItem('localDemo'));
-    if( localData.length === 0){
-      tableData += '<tr>No item Found</tr>'
-      console.log("No items found");
-    }
-    else{
-      JSON.parse(localStorage.getItem('localDemo')).map(data =>{
-        tableData += '<tr><td class="check-id">'+data.id+'</td><td>'+data.name+
-          '</td><td>'+data.number+
-          '</td><td>'+data.price+
-          '</td><td><a type="button" class="removeBtn" onclick=deleteItem(this) >Remove</a></td></tr>'
-      });
-
-      
-    }
-    getTable.innerHTML  = tableData;
-    
-    const removeBtn= document.querySelectorAll('.removeBtn');
+      const getTable= cartBox.querySelector('.retrive-table');
+      let tableData = '';
+      tableData += '<tr><th>ID</th> <th>Name</th> <th>Number</th><th>price</th><th>Action</th></tr>'
+      const localData= JSON.parse(localStorage.getItem('localDemo'));// the local storage will return an empty array therefore we need to check the length of the allray being  0;
+      if( localData.length === 0){
+        tableData += '<tr>No item Found</tr>'
+        console.log("No items found");
+      }
+      else{
+        JSON.parse(localStorage.getItem('localDemo')).map(data =>{
+          tableData += '<tr><td class="check-id">'+data.id+'</td><td>'+data.name+
+            '</td><td>'+data.number+
+            '</td><td>'+data.price+
+            '</td><td><a type="button" class="removeBtn"  >Remove</a></td></tr>'
+        });
+      }
+      getTable.innerHTML  = tableData;
+      const removeBtn= document.querySelectorAll('.removeBtn');
       removeBtn.forEach((individualBtn)=>{
         individualBtn.addEventListener('click',()=>{
-        const getId = individualBtn.closest('tr').querySelector('.check-id').innerText;
+          const getId = individualBtn.closest('tr').querySelector('.check-id').innerText;
           let items=[];
          JSON.parse(localStorage.getItem('localDemo')).map(data=>{
-          //the .map returns a new array thats why it is important here.
+          //the .map returns a new array and that's why it is important here.
           if(getId != data.id){
             items.push(data); //returns a new array and skips this item hence it is deleted.
           }
@@ -158,11 +155,44 @@
          window.location.reload();
       });
       });
-   });
-    function deleteItem(e){
-        
-        
-      }
-   
+      const makeOrder=document.querySelector('.make-order');
+      makeOrder.addEventListener('click',()=>{
+          let makeOrderItems=[];
+          let arrayLocalItems= JSON.parse(localStorage.getItem('localDemo'));
+         arrayLocalItems.forEach(data => {
+          makeOrderItems.push(
+          {
+            product_id: data.id,
+            no_goods : data.number
+          }
+          );
+         });
+        //  console.log(makeOrderItems);
+         axios.post('/orders',
+            {
+              customer_id: 4,
+              items: makeOrderItems
+            })
+            .then((response) => {
+              Swal.fire({
+                title:'Making order',
+                text:'Order created successfully',
+                icon: 'success'
+              }).then((result)=>{
+                if(result.isConfirmed){
+                  localStorage.setItem('localDemo',JSON.stringify([])); 
+                  /*I chose this because i only want to delete the content of the item
+                   not delete the entire key like it never existed through
+                   removeItem */
+                  window.location.reload();
+                }
+              });
+            })
+         .catch(error=>{
+          console.log('failed')
+         });
+         
+      });
+  });
 </script>
 
