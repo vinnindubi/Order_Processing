@@ -61,10 +61,7 @@
       </div>
     </nav>
   </header>
-
-
 <script>
-  
   document.addEventListener('DOMContentLoaded',()=>{
     const cartItem = document.querySelector('.iconShopping');
     const closeButton = document.querySelector('.btn-close');
@@ -120,11 +117,49 @@
       
     });
     //adding data to shopping cart
-    let no=0;
+    let no = 0;
       JSON.parse(localStorage.getItem('localDemo')).map(data=>{
-          no = no+data.number;
+          no = no + data.number;
       });
       updateIcon.textContent = no;
+   //adding data to shopping cart table
+    const getTable= cartBox.querySelector('.retrive-table');
+    let tableData = '';
+    tableData += '<tr><th>ID</th> <th>Name</th> <th>Number</th><th>price</th><th>Action</th></tr>'
+    if(JSON.parse(localStorage.getItem('localDemo')) === null){
+      tableData += '<tr><td>No item Found</td></tr>'
+    }else{
+      JSON.parse(localStorage.getItem('localDemo')).map(data =>{
+        tableData += '<tr><td class="check-id">'+data.id+'</td><td>'+data.name+
+          '</td><td>'+data.number+
+          '</td><td>'+data.price+
+          '</td><td><a type="button" class="removeBtn" onclick=deleteItem(this) >Remove</a></td></tr>'
+      });
+
+      
+    }
+    getTable.innerHTML  = tableData;
+    
+    const removeBtn= document.querySelectorAll('.removeBtn');
+      removeBtn.forEach((individualBtn)=>{
+        individualBtn.addEventListener('click',()=>{
+        const getId = individualBtn.closest('tr').querySelector('.check-id').innerText;
+          let items=[];
+         JSON.parse(localStorage.getItem('localDemo')).map(data=>{
+          //the .map returns a new array thats why it is important here.
+          if(getId != data.id){
+            items.push(data); //returns a new array and skips this item hence it is deleted.
+          }
+         });
+         localStorage.setItem('localDemo',JSON.stringify(items));
+         window.location.reload();
+      });
+      });
    });
+    function deleteItem(e){
+        
+        
+      }
+   
 </script>
 
