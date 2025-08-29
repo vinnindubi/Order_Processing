@@ -126,9 +126,12 @@
     const getTable= cartBox.querySelector('.retrive-table');
     let tableData = '';
     tableData += '<tr><th>ID</th> <th>Name</th> <th>Number</th><th>price</th><th>Action</th></tr>'
-    if(JSON.parse(localStorage.getItem('localDemo')) === null){
-      tableData += '<tr><td>No item Found</td></tr>'
-    }else{
+    const localData= JSON.parse(localStorage.getItem('localDemo'));
+    if( localData.length === 0){
+      tableData += '<tr>No item Found</tr>'
+      console.log("No items found");
+    }
+    else{
       JSON.parse(localStorage.getItem('localDemo')).map(data =>{
         tableData += '<tr><td class="check-id">'+data.id+'</td><td>'+data.name+
           '</td><td>'+data.number+
