@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\API\ProductApiController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\PermissionRoleController;
 use App\Http\Controllers\RoleController;
@@ -30,7 +30,7 @@ Route::apiResource('/roles',RoleController::class);
 
 Route::get('/stkPush',[PaymentController::class,'stkPush']);
 Route::post('/mpesaCallback',[PaymentController::class,'mpesaCallback']);
-Route::apiResource('/products',ProductController::class);
+Route::apiResource('/products',ProductApiController::class);
 Route::get('/orders/list',[OrderController::class ,'home']);
 Route::get('/orders/list/{id}',[OrderController::class ,'show']);
 Route::put('/orders/list/{id}',[OrderController::class ,'update']);
