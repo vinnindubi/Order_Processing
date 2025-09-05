@@ -2,10 +2,10 @@
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\OrderController;
+use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\API\ProductApiController;
-use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\API\CustomerController;
 use App\Http\Controllers\PermissionRoleController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
