@@ -18,7 +18,7 @@ class OrderController extends Controller
         return response()->json([
             "data"=>$data
         ],200);
-        return view('components.pages.orders',['orderData'=> $data]);
+       
         }
     public function show($id){
         $data=Order::find($id);
